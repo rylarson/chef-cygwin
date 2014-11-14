@@ -4,7 +4,7 @@ maintainer_email 'aogail@w007.org'
 license          'Apache 2.0'
 description      'Installs/Configures cygwin'
 long_description 'Installs/Configures cygwin'
-version          '0.1.0'
+version          '0.4.0'
 
 depends 'windows'
 depends 'windows_firewall'
