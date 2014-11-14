@@ -1,4 +1,42 @@
-chef-cygwin
-===========
+# chef-cygwin/-cookbook
 
-Chef cookbook to install and configure cygwin
+TODO: Enter the cookbook description here.
+
+## Supported Platforms
+
+TODO: List your supported platforms.
+
+## Attributes
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['chef-cygwin/']['bacon']</tt></td>
+    <td>Boolean</td>
+    <td>whether to include bacon</td>
+    <td><tt>true</tt></td>
+  </tr>
+</table>
+
+## Usage
+
+### chef-cygwin/::default
+
+Include `chef-cygwin/` in your node's `run_list`:
+
+```json
+{
+  "run_list": [
+    "recipe[chef-cygwin/::default]"
+  ]
+}
+```
+
+## License and Authors
+
+Author:: YOUR_NAME (<YOUR_EMAIL>)
