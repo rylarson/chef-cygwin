@@ -1,6 +1,2 @@
-actions :install
-
-def initialize(*args)
-  super
-  @action = :install
-end
+actions :install, :uninstall
+default_action :install

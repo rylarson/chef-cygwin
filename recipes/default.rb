@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+Chef::Resource::Execute.send(:include, Cygwin::Helpers)
+
 directory node['cygwin']['download_path'] do
   recursive true
 end
@@ -23,15 +25,9 @@ remote_file "#{node['cygwin']['download_path']}/setup.exe" do
   action :create
 end
 
-if Chef::Config['http_proxy'].nil?
-  proxycmd  = ""
-else
-  proxycmd  = "--proxy #{Chef::Config['http_proxy']}"
-end
-
 execute "setup.exe" do
   cwd node['cygwin']['download_path']
-  command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxycmd}"
+  command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command}"
   not_if { File.exists?("C:/cygwin/etc/passwd") }
 end
 
