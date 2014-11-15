@@ -16,7 +16,7 @@ directory node['cygwin']['download_path'] do
   recursive true
 end
 
-architecture = node[:kernel][:machine] =~ /x86_64/ ? "x86_64" : "x86"
+architecture = node['kernel']['machine'] =~ /x86_64/ ? "x86_64" : "x86"
 
 remote_file "#{node['cygwin']['download_path']}/setup.exe" do
   source "http://cygwin.com/setup-#{architecture}.exe"
