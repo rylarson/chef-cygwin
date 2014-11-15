@@ -4,6 +4,33 @@
 
 Windows
 
+## Providers
+
+### cygwin_package
+
+Install or remove cygwin packages.
+
+Example usage:
+
+```ruby
+cygwin_package 'openssh' do
+    action :install
+end
+```
+
+<table>
+  <tr>
+    <th>Actions</th>
+  </tr>
+  <tr>
+    <td>:install</td>
+  </tr>
+  <tr>
+    <td>:uninstall</td>
+  </tr>
+</table>
+
+
 ## Recipes
 
 ### cygwin::default
