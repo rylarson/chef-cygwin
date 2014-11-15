@@ -1,12 +1,14 @@
-# chef-cygwin/-cookbook
-
-TODO: Enter the cookbook description here.
+# cygwin cookbook
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
+Windows
 
-## Attributes
+## Recipes
+
+### cygwin::default
+
+#### Attributes
 
 <table>
   <tr>
@@ -16,27 +18,51 @@ TODO: List your supported platforms.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['chef-cygwin/']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['cygwin']['download_path']</tt></td>
+    <td>String</td>
+    <td>Path to download the cygwin installer executable</td>
+    <td><tt>Chef::Config['file_cache_path']</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['cygwin']['home']</tt></td>
+    <td>String</td>
+    <td>Path to install cygwin</td>
+    <td><tt>C:\cygwin</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['cygwin']['site']</tt></td>
+    <td>String</td>
+    <td>Mirror to use for downloading packages</td>
+    <td><tt>http://mirrors.kernel.org/sourceware/cygwin/</tt></td>
   </tr>
 </table>
 
-## Usage
+### cygwin::ssh
 
-### chef-cygwin/::default
+#### Attributes
 
-Include `chef-cygwin/` in your node's `run_list`:
-
-```json
-{
-  "run_list": [
-    "recipe[chef-cygwin/::default]"
-  ]
-}
-```
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['cygwin']['ssh']['sshd_user']</tt></td>
+    <td>String</td>
+    <td>User to run sshd as</td>
+    <td><tt>cyg_server</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['cygwin']['home']</tt></td>
+    <td>String</td>
+    <td>Path to install cygwin</td>
+    <td><tt>C:\cygwin</tt></td>
+  </tr>
+</table>
 
 ## License and Authors
 
-Author:: YOUR_NAME (<YOUR_EMAIL>)
+Author:: Ryan Larson (ryan.mango.larson@gmail.com)
+Author:: Ben Jansen (bjansen@w007.org)
