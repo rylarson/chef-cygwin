@@ -86,7 +86,7 @@ Installs cygwin and configures openssh
     <td><tt>cyg_server</tt></td>
   </tr>
   <tr>
-    <td><tt>['cygwin']['ssh']['sshd_password']</tt></td>
+    <td><tt>['cygwin']['ssh']['sshd_passwd']</tt></td>
     <td>String</td>
     <td>Password for the sshd user</td>
     <td><tt>nil</tt></td>
