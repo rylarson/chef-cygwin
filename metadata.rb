@@ -9,4 +9,4 @@ version          '0.4.5'
 supports 'windows'
 
 depends 'windows'
-depends 'windows_firewall'
+depends 'windows_firewall', '~> 2.0.0'
