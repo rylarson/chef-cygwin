@@ -103,4 +103,4 @@ Installs cygwin and configures openssh
 
 Author:: Ryan Larson (ryan.mango.larson@gmail.com)
 
-Author:: Ben Jansen (bjansen@w007.org)
+Author:: Ben Jansen (aogail@w007.org)
