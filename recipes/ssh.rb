@@ -52,7 +52,7 @@ execute 'Start sshd' do
 end
 
 windows_firewall_rule 'ssh' do
-    port 22
+    localport '22'
     protocol :TCP
     firewall_action :allow
 end
