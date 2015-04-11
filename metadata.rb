@@ -6,7 +6,7 @@ description      'Installs/Configures cygwin'
 long_description 'Installs/Configures cygwin'
 version          '0.5.0'
 
-supports 'windows', '> 0'
+supports 'windows', '> 0.0'
 
-depends 'windows'
+depends 'windows', '> 0.0'
 depends 'windows_firewall', '~> 2.0.0'
