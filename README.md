@@ -64,6 +64,12 @@ Installs cygwin
     <td>Mirror to use for downloading packages</td>
     <td><tt>http://mirrors.kernel.org/sourceware/cygwin/</tt></td>
   </tr>
+  <tr>
+    <td><tt>['cygwin']['packages']</tt></td>
+    <td>Array&lt;String&gt;</td>
+    <td>An optional list of cygwin packages to install</td>
+    <td><tt>[]</tt></td>
+  </tr>
 </table>
 
 ### cygwin::ssh

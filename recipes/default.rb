@@ -34,3 +34,10 @@ end
 windows_path "#{node['cygwin']['home']}/bin".gsub( /\//, "\\") do
   action :add
 end
+
+# Initially install a list of defined packages
+node['cygwin']['packages'].each do |pkg|
+    cygwin_package pkg do
+        action :install
+    end
+end
