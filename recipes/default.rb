@@ -25,10 +25,11 @@ remote_file "#{node['cygwin']['download_path']}/setup.exe" do
   action :create
 end
 
+# Unfortunately, this will show the gui, despite the -q
 execute "setup.exe" do
   cwd node['cygwin']['download_path']
-  command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command}"
-  not_if { File.exists?("C:/cygwin/etc/passwd") }
+  command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} --no-shortcuts #{proxy_command}"
+  not_if { File.exists?("#{node['cygwin']['home']}/etc/setup/installed.db") }
 end
 
 windows_path "#{node['cygwin']['home']}/bin".gsub( /\//, "\\") do
