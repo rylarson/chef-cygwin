@@ -12,24 +12,47 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-Chef::Resource::Execute.send(:include, Cygwin::Helpers)
+include Cygwin::Helpers
+
+def whyrun_supported?
+  true
+end
+
+def load_current_resource
+  @current_resource = Chef::Resource::CygwinPackage.new(@new_resource.name)
+  @current_resource.name(@new_resource.name)
+  
+  @current_resource.exists = is_installed?(node['cygwin']['home'], @new_resource.name)
+
+  @current_resource._setupcmd(@new_resource._setupcmd || "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command}")
+end
 
 action :install do
-  execute "install Cygwin package: #{new_resource.name}" do
-    cwd node['cygwin']['download_path']
-    command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command} -P #{new_resource.name}"
-    not_if "#{node['cygwin']['home']}/bin/cygcheck -c #{new_resource.name}".include? "OK"
-  end
+  if @current_resource.exists
+    Chef::Log.info "#{@current_resource} already installed"
+  else
+    pkg = current_resource.name
+    cmd = current_resource._setupcmd
+    ex  = execute "install Cygwin package: #{pkg}" do
+      cwd node['cygwin']['download_path']
+      command "#{cmd} -P #{pkg}"
+    end
 
-  new_resource.updated_by_last_action(true)
+    @new_resource.updated_by_last_action(ex.updated_by_last_action?)
+  end
 end
 
 action :uninstall do
-  execute "remove Cygwin package: #{new_resource.name}" do
-    cwd node['cygwin']['download_path']
-    command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command} -x #{new_resource.name}"
-    only_if "#{node['cygwin']['home']}/bin/cygcheck -c #{new_resource.name}".include? "OK"
-  end
+  unless @current_resource.exists
+    Chef::Log.info "#{@current_resource} already uninstalled"
+  else
+    pkg = current_resource.name
+    cmd = current_resource._setupcmd
+    ex  = execute "remove Cygwin package: #{pkg}" do
+      cwd node['cygwin']['download_path']
+      command "#{cmd} -x #{pkg}"
+    end
 
-  new_resource.updated_by_last_action(true)
+    @new_resource.updated_by_last_action(ex.updated_by_last_action?)
+  end
 end
