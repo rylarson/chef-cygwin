@@ -53,6 +53,6 @@ end
 
 windows_firewall_rule 'ssh' do
     localport '22'
-    protocol :TCP
+    protocol 'TCP'
     firewall_action :allow
 end
