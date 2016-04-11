@@ -27,7 +27,7 @@ end
 
 execute "setup.exe" do
   cwd node['cygwin']['download_path']
-  command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command}"
+  command "setup.exe -q -O -R #{node['cygwin']['home']} --no-desktop --download --local-install -s #{node['cygwin']['site']} #{proxy_command}"
   not_if { File.exists?("C:/cygwin/etc/passwd") }
 end
 
