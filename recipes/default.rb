@@ -37,8 +37,8 @@ end
 
 # Initially install a list of defined packages
 node['cygwin']['packages'].each do |pkg|
-    cygwin_package pkg do
-        not_if {File.file?("#{node['cygwin']['home']}/bin/#{pkg}")}
-        action :install
-    end
+  cygwin_package pkg do
+    not_if {File.exist?("#{node['cygwin']['home']}/bin/#{pkg}")}
+    action :install
+  end
 end
