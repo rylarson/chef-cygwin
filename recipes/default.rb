@@ -26,9 +26,9 @@ remote_file "#{node['cygwin']['download_path']}/setup.exe" do
 end
 
 execute "setup.exe" do
+  not_if { File.exists?("C:/cygwin/etc/passwd") }
   cwd node['cygwin']['download_path']
   command "setup.exe -q -O -R #{node['cygwin']['home']} --no-desktop --download --local-install -s #{node['cygwin']['site']} #{proxy_command}"
-  not_if { File.exists?("C:/cygwin/etc/passwd") }
 end
 
 windows_path "#{node['cygwin']['home']}/bin".gsub( /\//, "\\") do
@@ -38,6 +38,7 @@ end
 # Initially install a list of defined packages
 node['cygwin']['packages'].each do |pkg|
     cygwin_package pkg do
+        not_if {File.file?("#{node['cygwin']['home']}/bin/#{pkg}")}
         action :install
     end
 end
