@@ -18,6 +18,14 @@ if node['cygwin']['ssh']['sshd_passwd'].nil?
     raise "You MUST define a password for the sshd privileged user in your attributes! (node['cygwin']['ssh']['sshd_passwd'])"
 end
 
+user node['cygwin']['ssh']['sshd_user'] do
+    password node['cygwin']['ssh']['sshd_passwd']
+    not_if {
+        user = Chef::Util::Windows::NetUser.new(node['cygwin']['ssh']['sshd_user'])
+        !!user.get_info rescue false
+    }
+end
+
 packages = %w{openssh cygrunsrv}
 
 packages.each do |pkg|
