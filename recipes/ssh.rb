@@ -36,7 +36,7 @@ end
 execute 'Configure sshd service' do
     cwd 'C:\cygwin\bin'
     environment ({'PATH' => '$PATH:.:/cygdrive/c/cygwin/bin'})
-    command "bash /usr/bin/ssh-host-config --yes --cygwin \"ntsec\" --user #{node['cygwin']['ssh']['sshd_user']} --pwd r\"#{node['cygwin']['ssh']['sshd_passwd']}\" "
+    command "bash /usr/bin/ssh-host-config --yes --cygwin \"ntsec\" --user #{node['cygwin']['ssh']['sshd_user']} --pwd \"#{node['cygwin']['ssh']['sshd_passwd']}\" "
     not_if('cygrunsrv -Q sshd').include? 'Running' 
 end
 
