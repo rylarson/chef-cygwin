@@ -18,26 +18,27 @@ directory node['cygwin']['download_path'] do
   recursive true
 end
 
-architecture = node['kernel']['machine'] =~ /x86_64/ ? "x86_64" : "x86"
+architecture = node['kernel']['machine'] =~ /x86_64/ ? 'x86_64' : 'x86'
 
 remote_file "#{node['cygwin']['download_path']}/setup.exe" do
   source "http://cygwin.com/setup-#{architecture}.exe"
   action :create
 end
 
-execute "setup.exe" do
+execute 'setup.exe' do
   cwd node['cygwin']['download_path']
-  command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command}"
-  not_if { File.exists?("C:/cygwin/etc/passwd") }
+  command "setup.exe -q -O -R #{node['cygwin']['home']} --no-desktop --download --local-install -s #{node['cygwin']['site']} #{proxy_command}"
+  not_if { File.exist?('C:/cygwin/etc/passwd') }
 end
 
-windows_path "#{node['cygwin']['home']}/bin".gsub( /\//, "\\") do
+windows_path "#{node['cygwin']['home']}/bin".gsub(/\//, '\\') do
   action :add
 end
 
 # Initially install a list of defined packages
 node['cygwin']['packages'].each do |pkg|
-    cygwin_package pkg do
-        action :install
-    end
+  cygwin_package pkg do
+    not_if { File.file?("#{node['cygwin']['home']}/bin/#{pkg}") }
+    action :install
+  end
 end
