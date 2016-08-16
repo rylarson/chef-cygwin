@@ -1,5 +1,5 @@
 # Copyright 2012, La Presse
-#
+##
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -13,6 +13,6 @@
 # limitations under the License.
 
 default['cygwin']['download_path'] = Chef::Config['file_cache_path']
-default['cygwin']['home'] = "C:/cygwin"
-default['cygwin']['site'] = "http://cygwin.mirrors.pair.com"
+default['cygwin']['home'] = 'C:/cygwin'
+default['cygwin']['site'] = 'http://cygwin.mirrors.pair.com'
 default['cygwin']['packages'] = []
