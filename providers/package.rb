@@ -15,12 +15,12 @@
 Chef::Resource::Execute.send(:include, Cygwin::Helpers)
 
 action :install do
-  not_if do
-    Mixlib::ShellOut.new(
-      "#{node['cygwin']['home']}/bin/cygcheck.exe -c #{new_resource.name}"
-    ).run_command.stdout.include?('OK')
-  end
   execute "install Cygwin package: #{new_resource.name}" do
+    not_if do
+      Mixlib::ShellOut.new(
+        "#{node['cygwin']['home']}/bin/cygcheck.exe -c #{new_resource.name}"
+      ).run_command.stdout.include?('OK')
+    end
     cwd node['cygwin']['download_path']
     command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command} -P #{new_resource.name}"
   end
@@ -30,13 +30,13 @@ end
 
 action :uninstall do
   execute "remove Cygwin package: #{new_resource.name}" do
+    cwd node['cygwin']['download_path']
+    command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command} -x #{new_resource.name}"
     only_if do
       Mixlib::ShellOut.new(
         "#{node['cygwin']['home']}/bin/cygcheck.exe -c #{new_resource.name}"
       ).run_command.stdout.include?('OK')
     end
-    cwd node['cygwin']['download_path']
-    command "setup.exe -q -O -R #{node['cygwin']['home']} -s #{node['cygwin']['site']} #{proxy_command} -x #{new_resource.name}"
   end
 
   new_resource.updated_by_last_action(true)
