@@ -1,0 +1,28 @@
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 2048
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: true
+
+
+platforms:
+  - name: win-2012r2-amd64
+    os_type: windows
+    shell_type: powershell
+    transport:
+      name: winrm
+      port: 55985
+      username: vagrant
+      password: vagrant
+      endpoint_template: "http://127.0.0.1:55985/wsman"
+    driver:
+     box: kensykora/windows_2012_r2_standard
+
+suites:
+  - name: default
+    run_list:
+      - recipe[cygwin::default]

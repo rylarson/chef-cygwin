@@ -11,6 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+class ::Chef::Recipe
+  include ::Cygwin::Helpers
+end
+
+mirror = test_mirror_sites
+
+node.default['cygwin']['site'] = mirror
+
+puts 'Using mirror ' + mirror
 
 Chef::Resource::Execute.send(:include, Cygwin::Helpers)
 
