@@ -33,12 +33,13 @@ execute 'Stop sshd' do
     only_if 'cygrunsrv -Q sshd'
 end
 
-execute 'Configure sshd service' do
-    cwd 'C:\cygwin\bin'
-    environment ({'PATH' => '$PATH:.:/cygdrive/c/cygwin/bin'})
-    command "bash /usr/bin/ssh-host-config --yes --cygwin \"ntsec\" --user #{node['cygwin']['ssh']['sshd_user']} --pwd \"#{node['cygwin']['ssh']['sshd_passwd']}\" "
-    not_if('cygrunsrv -Q sshd').include? 'Running' 
-end
+# Can ypu please look at eh below scrip as it is throwing an error when trying to execute the congiure sshd part 
+# execute 'Configure sshd service' do
+#     cwd 'C:\cygwin\bin'
+#     environment ({'PATH' => '$PATH:.:/cygdrive/c/cygwin/bin'})
+#     command "bash /usr/bin/ssh-host-config --yes --cygwin \"ntsec\" --user #{node['cygwin']['ssh']['sshd_user']} --pwd \"#{node['cygwin']['ssh']['sshd_passwd']}\" "
+#     not_if('cygrunsrv -Q sshd').include? 'Running' 
+# end
 
 execute 'Make sure the password does not expire' do
     command  "net user #{node['cygwin']['ssh']['sshd_user']} /expires:never /active:yes"
